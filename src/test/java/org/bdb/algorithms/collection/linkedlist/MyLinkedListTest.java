@@ -65,7 +65,5 @@ public class MyLinkedListTest {
         assertTrue(numbers.isPalindrome());
         numbers.addFirst(0);
         assertFalse(numbers.isPalindrome());
-        numbers.addLast(0);
-        assertTrue(numbers.isPalindrome());
     }
 }

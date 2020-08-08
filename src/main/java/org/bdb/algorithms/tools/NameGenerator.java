@@ -1,8 +1,14 @@
 package org.bdb.algorithms.tools;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -16,7 +22,9 @@ import java.util.stream.Stream;
  */
 public class NameGenerator implements Generator<String> {
 
-    private static final String INPUT_FILE = "names.txt";
+    private static final Logger LOGGER = LogManager.getLogger(NameGenerator.class);
+
+    private static final String INPUT_FILE = "src/main/resources/names.txt";
 
     @Override
     public List<String> generate(int size, boolean withDuplicates) {
@@ -47,5 +55,18 @@ public class NameGenerator implements Generator<String> {
         }
 
         return null;
+    }
+
+    @Override
+    public void generateFile(int size, boolean withDuplicates, String outputPath) {
+        List<String> names = generate(size, withDuplicates);
+        Path path = Paths.get(outputPath);
+        try (PrintWriter writer = new PrintWriter(Files.newBufferedWriter(path))) {
+            for (String name : names) {
+                writer.println(name);
+            }
+        } catch (IOException e) {
+            LOGGER.error(e);
+        }
     }
 }

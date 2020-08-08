@@ -1,13 +1,14 @@
 package org.bdb.algorithms;
 
-/**
- * Hello world!
- *
- */
-public class App 
+import org.bdb.algorithms.tools.NameGenerator;
+
+public class App
 {
     public static void main( String[] args )
     {
+        NameGenerator nameGenerator = new NameGenerator();
+        nameGenerator.generateFile(50000000, true, "names.txt");
+
         System.out.println( "Hello World!" );
     }
 }
