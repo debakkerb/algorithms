@@ -2,49 +2,49 @@ package org.bdb.algorithms.sort;
 
 import org.bdb.algorithms.tools.Printer;
 
-public class QuickSort implements Sort<Integer> {
+import java.util.Comparator;
 
-    private Integer[] items;
-    private Printer<Integer> printer;
+public class QuickSort<T> implements Sort<T> {
+    private T[] items;
+    private Comparator<T> comparator;
 
     @Override
-    public void sort(Integer[] items, Printer<Integer> printer) {
+    public T[] sort(T[] items, Printer<T> printer, Comparator<T> comparator) {
         this.items = items;
-        this.printer = printer;
+        this.comparator = comparator;
 
-        printer.print("Before sort: ", items);
-        quickSort(0, items.length - 1);
-        printer.print("After sort: ", items);
+        quickSort(0, this.items.length - 1);
+        return this.items;
     }
 
     private void quickSort(int start, int finish) {
         if (start < finish) {
-            int partitionIdx = partition(start, finish);
+            int partitionIdx = pivot(start, finish);
             quickSort(start, partitionIdx - 1);
             quickSort(partitionIdx + 1, finish);
         }
     }
 
-    private int partition(int start, int finish) {
-        int pivot = items[finish];
-        int tail = start - 1;
+    private int pivot(int start, int finish) {
+        T pivot = this.items[finish];
+        int tailIdx = start - 1;
 
         for (int j = start; j < finish; j++) {
-            if (items[j] <= pivot) {
-                tail++;
-                swap(tail, j);
+            if (comparator.compare(items[j], pivot) <= 0) {
+                tailIdx++;
+                swap(tailIdx, j);
             }
         }
 
-        tail++;
-        swap(finish, tail);
-        return tail;
+        tailIdx++;
+        swap(tailIdx, finish);
+
+        return tailIdx;
     }
 
     private void swap(int idxA, int idxB) {
-        int temp = items[idxA];
-        items[idxA] = items[idxB];
-        items[idxB] = temp;
+        T temp = this.items[idxA];
+        this.items[idxA] = this.items[idxB];
+        this.items[idxB] = temp;
     }
-
 }
