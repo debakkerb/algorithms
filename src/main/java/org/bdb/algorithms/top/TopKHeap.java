@@ -26,6 +26,8 @@ public class TopKHeap<T> implements TopK<T> {
             topItems.add(0, minHeap.poll());
         }
 
+        // This results in an ClassCastException.
+        // TODO: Investigate why (
         return (T[]) topItems.toArray();
     }
 

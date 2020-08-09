@@ -1,6 +1,7 @@
 package org.bdb.algorithms.search;
 
 import java.util.Comparator;
+import java.util.Objects;
 
 public class BinarySearch<T> implements Search<T> {
 
@@ -23,7 +24,6 @@ public class BinarySearch<T> implements Search<T> {
                 right = middle - 1;
             }
         }
-
 
         return -1;
     }
