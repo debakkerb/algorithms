@@ -1,7 +1,5 @@
 package org.bdb.algorithms.top;
 
-import java.util.Comparator;
-
 public interface TopK<T> {
 
     /**

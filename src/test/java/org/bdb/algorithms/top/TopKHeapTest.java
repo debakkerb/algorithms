@@ -23,7 +23,7 @@ public class TopKHeapTest {
         };
 
         TopK<String> top = new TopKString();
-        assertThat(new String[]{"John", "Jane"}, Matchers.arrayContainingInAnyOrder(top.getMostOccurrences(input, 2)));
+        assertThat(new String[]{"Jane", "John"}, Matchers.arrayContaining(top.getMostOccurrences(input, 2)));
     }
 
 }
