@@ -4,9 +4,9 @@ import org.bdb.algorithms.data.LinkedNode;
 
 public class MyLinkedList<T> implements LinkedList<T> {
 
-    private LinkedNode<T> head;
-    private LinkedNode<T> tail;
-    private int size;
+    protected LinkedNode<T> head;
+    protected LinkedNode<T> tail;
+    protected int size;
 
     public int size() {
         return size;
