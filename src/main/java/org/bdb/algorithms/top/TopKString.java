@@ -1,40 +1,52 @@
 package org.bdb.algorithms.top;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.PriorityQueue;
+import java.util.Queue;
+import java.util.stream.Stream;
 
-public class TopKString implements TopK<String>{
+public class TopKString implements TopK<String> {
 
     private String[] items;
-    private Map<String, Integer> occurrences;
+    private Map<String, Integer> uniqueOccurrences = new HashMap<>();
 
     @Override
     public String[] getMostOccurrences(String[] items, int k) {
         this.items = items;
 
-        countOccurrences();
+        calculateUniqueOccurrences();
+        Queue<String> topItems = new PriorityQueue<>((n1, n2) -> uniqueOccurrences.get(n1) - uniqueOccurrences.get(n2));
 
-        PriorityQueue<String> queue = new PriorityQueue<>((n1, n2) -> occurrences.get(n1) - occurrences.get(n2));
-        for (String item : occurrences.keySet()) {
-            queue.add(item);
-            if (queue.size() > k) {
-                queue.poll();
+        for (String item : uniqueOccurrences.keySet()) {
+            topItems.add(item);
+            if (topItems.size() > k) {
+                topItems.poll();
             }
         }
 
-        String[] topKItems = new String[k];
+        String[] result = new String[k];
         for (int idx = k - 1; idx >= 0; idx--) {
-            topKItems[idx] = queue.poll();
+            result[idx] = topItems.poll();
         }
 
-        return topKItems;
+        try (Stream<String> stream = Files.lines(Paths.get("filePath"))) {
+            stream.forEach((line) -> {
+                System.out.println(line);
+            });
+        } catch (IOException ioException) {
+
+        }
+
+        return result;
     }
 
-    private void countOccurrences() {
-        occurrences = new HashMap<>();
+    private void calculateUniqueOccurrences() {
         for (String item : items) {
-            occurrences.put(item, occurrences.getOrDefault(item, 0) + 1);
+            uniqueOccurrences.put(item, uniqueOccurrences.getOrDefault(item, 0) + 1);
         }
     }
 }

@@ -41,7 +41,7 @@ public class MergeSort<T> implements Sort<T> {
         int itemIdx = low;
 
         while (leftIdx <= middle && rightIdx <= high) {
-            if (comparator.compare(helper[leftIdx], helper[rightIdx]) <= 0) {
+            if (comparator.compare(helper[leftIdx], helper[rightIdx]) < 0) {
                 this.items[itemIdx] = helper[leftIdx];
                 leftIdx++;
             } else {

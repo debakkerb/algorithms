@@ -38,11 +38,11 @@ public class SortTest {
     public void testQuickSort() {
         Sort<Integer> sort = new QuickSort<>();
         Integer[] sortedItems = sort.sort(
-                new Integer[]{50, 23, 1, 100, 80, 77, 9},
+                new Integer[]{50, 23, 1, 100, 9, 80, 77, 9},
                 new ArrayPrinter<>(),
                 (n1, n2) -> n1 - n2
         );
 
-        assertThat(new Integer[]{1, 9, 23, 50, 77, 80, 100}, Matchers.arrayContaining(sortedItems));
+        assertThat(new Integer[]{1, 9, 9, 23, 50, 77, 80, 100}, Matchers.arrayContaining(sortedItems));
     }
 }

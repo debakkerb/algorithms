@@ -27,16 +27,15 @@ public class QuickSort<T> implements Sort<T> {
 
     private int pivot(int start, int finish) {
         T pivot = this.items[finish];
-        int tailIdx = start - 1;
+        int tailIdx = start;
 
         for (int j = start; j < finish; j++) {
-            if (comparator.compare(items[j], pivot) <= 0) {
-                tailIdx++;
+            if (comparator.compare(items[j], pivot) < 0) {
                 swap(tailIdx, j);
+                tailIdx++;
             }
         }
 
-        tailIdx++;
         swap(tailIdx, finish);
 
         return tailIdx;
